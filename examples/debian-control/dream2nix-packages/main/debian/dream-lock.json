@@ -1,0 +1,26 @@
+{
+  "_generic": {
+    "defaultPackage": "i3-wm-debian",
+    "invalidationHash": "8cf2ce99c521ab352c966cfe44345205a218a95ea8636bc40742195d4da08195",
+    "location": "",
+    "packages": {
+      "i3-wm-debian": "UNKNOWN"
+    },
+    "sourcesAggregatedHash": null,
+    "subsystem": "debian"
+  },
+  "_subsystem": {
+    "control_inputs": [
+      "cairo",
+      "docbook-xml",
+      "libX11",
+      "libxkbcommon",
+      "meson",
+      "pango",
+      "pcre2",
+      "xcb-util-keysyms",
+      "xmlto"
+    ]
+  },
+  "sources": {}
+}

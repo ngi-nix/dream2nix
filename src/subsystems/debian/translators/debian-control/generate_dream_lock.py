@@ -6,14 +6,15 @@ import pathlib
 def main():
     # TODO parse versions
     VERSION = "UNKNOWN"
+    NAME=os.environ.get("NAME") + "-debian"
 
     dream_lock = dict(
         sources={},
         _generic={
             "subsystem": "debian",
-            "defaultPackage": os.environ.get("NAME"),
+            "defaultPackage": NAME,
             "packages": {
-                os.environ.get("NAME"): VERSION,
+                NAME: VERSION,
             },
             "sourcesAggregatedHash": None,
             "location": "",
