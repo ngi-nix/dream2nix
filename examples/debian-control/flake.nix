@@ -13,5 +13,11 @@
     systems = ["x86_64-linux"];
     config.projectRoot = ./.;
     source = cosmic;
+    settings = [
+      # {
+      #   builder = "debian-control";
+      #   # translator = "debian-control";
+      # }
+    ];
   });
 }

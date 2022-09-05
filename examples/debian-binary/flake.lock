@@ -23,22 +23,6 @@
         "type": "github"
       }
     },
-    "cosmic": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1659002596,
-        "narHash": "sha256-JGQW/9TdN48iyGMxRitPd4krXhb0qaLeGEfazFoL2J4=",
-        "owner": "i3",
-        "repo": "i3",
-        "rev": "ebcd1d43ea9fd08a1dbb1212fb61e42f05a22684",
-        "type": "github"
-      },
-      "original": {
-        "owner": "i3",
-        "repo": "i3",
-        "type": "github"
-      }
-    },
     "crane": {
       "flake": false,
       "locked": {
@@ -84,10 +68,12 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1662049152,
-        "narHash": "sha256-Q6IpguPkmtjxm4RYXKQC2U4veDyzqmR5YIFTIGEXww4=",
-        "type": "git",
-        "url": "file:///home/kenji/git/dream2nix"
+        "lastModified": 1662365249,
+        "narHash": "sha256-NSQjtPVHpDcPAFMAq5fhcNqF5bTRBq4R32+xLQEINGM=",
+        "owner": "nix-community",
+        "repo": "dream2nix",
+        "rev": "02f8a119c1c5a4d45893b71588a257a9d3f9b79e",
+        "type": "github"
       },
       "original": {
         "owner": "nix-community",
@@ -239,7 +225,6 @@
     },
     "root": {
       "inputs": {
-        "cosmic": "cosmic",
         "dream2nix": "dream2nix"
       }
     },

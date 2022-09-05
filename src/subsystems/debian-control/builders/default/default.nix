@@ -40,11 +40,14 @@
     #   produceDerivation name (mkDerivation {...})
     produceDerivation,
     ...
-  } @ args: let
+  } @ args: 
+  let
     l = lib // builtins;
 
     # the main package
-    defaultPackage = allPackages."${defaultPackageName}"."${defaultPackageVersion}";
+    # defaultPackage = throw (lib.toString allPackages);
+    defaultPackage = allPackages."${defaultPackageName}";
+  # ."${defaultPackageVersion}";
 
     # packages to export
     packages =
@@ -86,16 +89,18 @@
         nativeBuildInputs = getSource "control_inputs" ++ [pkgs.pkg-config];
 
         # TODO: Implement build phases
-        passthru.devShells."${defaultPackageName}-test" = pkgs.mkShell {
-          name = "${defaultPackageName}-test";
-          buildInputs = nativeBuildInputs ++ buildInputs;
-        };
+        # passthru.devShells."${defaultPackageName}-test" = pkgs.mkShell {
+        #   name = "${defaultPackageName}-test";
+        #   buildInputs = nativeBuildInputs ++ buildInputs;
+        # };
       };
     in
       # apply packageOverrides to current derivation
       produceDerivation name pkg;
   in {
-    inherit defaultPackage packages;
+    inherit 
+    defaultPackage 
+    packages;
     devShells = {
       test = pkgs.mkShell {
         buildInputs = [pkgs.tree];
