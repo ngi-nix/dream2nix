@@ -1,25 +1,45 @@
 { input ? ""
-, pkgs ? <nixpkgs>
-, lib
+, pkgs ? import <nixpkgs> {}
+, lib ? pkgs.lib
 }:
 let
-  controlFile = ./CONTROL.test;
   l = lib // builtins;
-  lines = l.splitString "\n" controlFile;
+
+  controlFilePath = ./CONTROL.test;
+  controlFileText = l.readFile controlFilePath;
   desiredHeaders = ["Source" "Build-Depends" "Depends" "Recommends" "Suggests"];
-  # takeWhile = pred: list:
-    # foldl' (accum: line:
-    #   if pred line
-    #   then [head list] ++ accum
-    # else accum)
 
-    # if list == []
-    # then []
-    # else if pred (head list)
-    # then [head list] ++ takeWhile pred (tail list)
+  trimSurroundingWhitespace = str:
+    l.pipe str [
+      (l.split "^[ \t\n]*")
+      l.flatten
+      l.concatStrings
+      (l.split "[ \t\n]*$")
+      l.flatten
+      l.concatStrings
+    ];
 
-  # foldl' () lines
+  sectionNamesAndContents = l.tail (l.split "\n([^ \t:]+):" (
+    "\n" + (trimSurroundingWhitespace controlFileText)
+  ));
+
+  sectionNames = l.pipe sectionNamesAndContents [
+    (l.filter l.isList)
+    (l.map l.head)
+  ];
+
+  sectionContents = l.pipe sectionNamesAndContents [
+    (l.filter l.isString)
+    (l.map
+      (str:
+        l.pipe str [
+          (l.splitString "\n")
+          l.concatStrings
+          (l.splitString ",")
+          (l.map trimSurroundingWhitespace)
+        ]))
+  ];
   in
   {
-
+    inherit sectionNamesAndContents sectionNames sectionContents;
   }
