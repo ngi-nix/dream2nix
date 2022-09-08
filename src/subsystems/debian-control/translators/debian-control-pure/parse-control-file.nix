@@ -1,11 +1,9 @@
 {
-  input ? "",
-  pkgs ? import <nixpkgs> {},
-  lib ? pkgs.lib,
+  input,
+  lib,
 }: let
   l = lib // builtins;
 
-  desiredHeaders = ["Source" "Build-Depends" "Depends" "Recommends" "Suggests"];
   inputHeaders = ["Build-Depends" "Depends" "Recommends" "Suggests"];
 
   trimSurroundingWhitespace = str:
@@ -19,7 +17,7 @@
     ];
 
   sectionNamesAndContents = l.tail (l.split "\n([^ \t:]+):" (
-    "\n" + (trimSurroundingWhitespace controlFileText)
+    "\n" + (trimSurroundingWhitespace input)
   ));
 
   sectionNames = l.pipe sectionNamesAndContents [
@@ -48,23 +46,22 @@
 
   packageName = l.head sectionNamesWithContents.Source;
 
-  inputAttrsWithHeaders = l.filterAttrs (header: _: lib.any (inputHeader: header == inputHeader) inputHeaders) sectionNamesWithContents;
+  inputAttrsWithHeaders = l.filterAttrs (header: _: builtins.elem header inputHeaders) sectionNamesWithContents;
 
   allDependencies = l.unique (l.flatten (l.attrValues inputAttrsWithHeaders));
 
-  # throw out ${...:...}
+  # Throw out ${...:...}
+  # XXX: There is probably a better way to do this
   allDependenciesWithoutLeadingDollar =
     l.filter
-      (depName: (builtins.match ''\$.+'' depName) == null)
-      allDependencies;
+    (depName: (builtins.match ''\$.+'' depName) == null)
+    allDependencies;
 
   allDependenciesWithoutVersions =
     l.map
-      (depName:
-        builtins.head (l.split " " depName)
-        # builtins.head (builtins.match "([^ \t]+) .+" depName)
-      )
-      allDependenciesWithoutLeadingDollar;
+    (depName:
+      builtins.head (l.split " " depName))
+    allDependenciesWithoutLeadingDollar;
 in {
   inherit packageName sectionNamesAndContents sectionNames sectionContents sectionNamesWithContents inputAttrsWithHeaders allDependencies allDependenciesWithoutLeadingDollar allDependenciesWithoutVersions;
 }

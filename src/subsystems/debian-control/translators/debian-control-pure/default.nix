@@ -4,7 +4,6 @@
   ...
 }: let
   l = lib // builtins;
-  parser = import ./parse-control-file.nix {inherit lib;};
 in {
   type = "pure";
 
@@ -118,8 +117,14 @@ in {
     projectSource = "${tree.fullPath}/${project.relPath}";
     projectTree = tree.getNodeFromPath project.relPath;
 
-    # parse the json / toml etc.
-    projectJson = (projectTree.getNodeFromPath "project.json").jsonContent;
+    controlFilePath = rootSource + "debian/control";
+    controlFileText = l.readFile controlFilePath;
+
+    parsedControlFile = import ./parse-control-file.nix {
+      inherit lib;
+      input = controlFileText;
+    };
+    controlInputs = parsedControlFile.allDependenciesWithoutVersions;
   in
     dlib.simpleTranslate2.translate
     ({objectsByKey, ...}: rec {
@@ -130,11 +135,6 @@ in {
 
       # the name of the subsystem
       subsystemName = "debian-control";
-
-      controlFilePath = rootSource + "debian/control";
-      controlFileText = l.readFile controlFilePath;
-      parsedControlFile = parser {input = controlFileText;};
-      controlInputs = parsedControlFile.allDependenciesWithoutVersions;
 
       # Extract subsystem specific attributes.
       # The structure of this should be defined in:
@@ -210,23 +210,23 @@ in {
       Optionally add extra objects (list of `finalObj`) to be added to
       the dream-lock.
       */
-    #   extraObjects = [
-    #     {
-    #       name = "foo2";
-    #       version = "1.0";
-    #       dependencies = [
-    #         {
-    #           name = "bar2";
-    #           version = "1.1";
-    #         }
-    #       ];
-    #       sourceSpec = {
-    #         type = "git";
-    #         url = "https://...";
-    #         rev = "...";
-    #       };
-    #     }
-    #   ];
+      #   extraObjects = [
+      #     {
+      #       name = "foo2";
+      #       version = "1.0";
+      #       dependencies = [
+      #         {
+      #           name = "bar2";
+      #           version = "1.1";
+      #         }
+      #       ];
+      #       sourceSpec = {
+      #         type = "git";
+      #         url = "https://...";
+      #         rev = "...";
+      #       };
+      #     }
+      #   ];
     });
 
   # If the translator requires additional arguments, specify them here.

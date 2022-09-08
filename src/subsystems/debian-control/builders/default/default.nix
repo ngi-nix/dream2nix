@@ -73,7 +73,7 @@
         (version: makeOnePackage name version))
       packageVersions;
 
-      nativeBuildInputs = map (name: pkgs."${name}") (subsystemAttrs."control_inputs") ++ [pkgs.glib];
+    nativeBuildInputs = map (name: pkgs."${name}") (subsystemAttrs."control_inputs") ++ [pkgs.glib];
     # nativeBuildInputs = (getSource "control_inputs" "1.0.0") ++ [pkgs.pkg-config];
     # buildInputs = (getSource "control_inputs" "1.0.0") ++ [pkgs.pkg-config];
     buildInputs = [];
@@ -97,7 +97,6 @@
           (getDependencies name version)
           ++ getSource "control_inputs"
           ++ [pkgs.pkg-config];
-
 
         # TODO: Implement build phases
         # passthru.devShells."${defaultPackageName}-test" = pkgs.mkShell {
