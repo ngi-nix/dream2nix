@@ -84,8 +84,8 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1662377011,
-        "narHash": "sha256-MnkEe3jROEj8c78ltt95fdRgVLMR6iYNHRmIRdtg5q0=",
+        "lastModified": 1662665252,
+        "narHash": "sha256-CFNVegwPs00FNdMHtOoV7lOn32AcGWuHWdxsYIAAKgg=",
         "type": "git",
         "url": "file:///home/kenji/git/dream2nix"
       },

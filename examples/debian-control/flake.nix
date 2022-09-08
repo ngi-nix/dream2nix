@@ -14,10 +14,10 @@
     config.projectRoot = ./.;
     source = cosmic;
     settings = [
-      # {
-      #   builder = "debian-control";
-      #   # translator = "debian-control";
-      # }
+      {
+        # builder = "debian-control";
+        translator = "debian-control-pure";
+      }
     ];
   });
 }

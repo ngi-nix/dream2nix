@@ -18,7 +18,7 @@ in {
   */
   generateUnitTestsForProjects = [
     (builtins.fetchTarball {
-      url = "";
+      url = "https://github.com/pop-os/launcher/tarball/6e2fa02e819435f0ce0693baeb5d7907c7fd9719";
       sha256 = "";
     })
   ];
@@ -227,7 +227,7 @@ in {
     #       };
     #     }
     #   ];
-    # });
+    });
 
   # If the translator requires additional arguments, specify them here.
   # Users will be able to set these arguments via `settings`.
@@ -239,20 +239,20 @@ in {
   extraArgs = {
     # Example: boolean option
     # Flags always default to 'false' if not specified by the user
-    noDev = {
-      description = "Exclude dev dependencies";
-      type = "flag";
-    };
-
-    # Example: string option
-    theAnswer = {
-      default = "42";
-      description = "The Answer to the Ultimate Question of Life";
-      examples = [
-        "0"
-        "1234"
-      ];
-      type = "argument";
-    };
+    # noDev = {
+    #   description = "Exclude dev dependencies";
+    #   type = "flag";
+    # };
+    #
+    # # Example: string option
+    # theAnswer = {
+    #   default = "42";
+    #   description = "The Answer to the Ultimate Question of Life";
+    #   examples = [
+    #     "0"
+    #     "1234"
+    #   ];
+    #   type = "argument";
+    # };
   };
 }
