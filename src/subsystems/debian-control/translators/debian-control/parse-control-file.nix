@@ -1,13 +1,14 @@
-{ input ? ""
-, pkgs ? import <nixpkgs> {}
-, lib ? pkgs.lib
-}:
-let
+{
+  input ? "",
+  pkgs ? import <nixpkgs> {},
+  lib ? pkgs.lib,
+}: let
   l = lib // builtins;
 
   controlFilePath = ./CONTROL.test;
   controlFileText = l.readFile controlFilePath;
   desiredHeaders = ["Source" "Build-Depends" "Depends" "Recommends" "Suggests"];
+  inputHeaders = ["Build-Depends" "Depends" "Recommends" "Suggests"];
 
   trimSurroundingWhitespace = str:
     l.pipe str [
@@ -26,6 +27,7 @@ let
   sectionNames = l.pipe sectionNamesAndContents [
     (l.filter l.isList)
     (l.map l.head)
+    (l.map trimSurroundingWhitespace)
   ];
 
   sectionContents = l.pipe sectionNamesAndContents [
@@ -39,7 +41,9 @@ let
           (l.map trimSurroundingWhitespace)
         ]))
   ];
-  in
-  {
-    inherit sectionNamesAndContents sectionNames sectionContents;
-  }
+  sectionNamesWithContents = l.listToAttrs (l.zipListsWith l.nameValuePair sectionNames sectionContents);
+  packageName = l.head sectionNamesWithContents.Source;
+  inputList = l.filterAttrs (header: _: lib.any (inputHeader: header == inputHeader) inputHeaders) sectionNamesWithContents;
+in {
+  inherit packageName sectionNamesAndContents sectionNames sectionContents sectionNamesWithContents inputList;
+}
