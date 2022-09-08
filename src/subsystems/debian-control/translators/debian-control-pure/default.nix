@@ -19,7 +19,8 @@ in {
   generateUnitTestsForProjects = [
     (builtins.fetchTarball {
       url = "https://github.com/pop-os/launcher/tarball/6e2fa02e819435f0ce0693baeb5d7907c7fd9719";
-      sha256 = "";
+      sha256 = "0rz48c92b11x0mn9ji55rlxb910mhky7jdlfnyr7ibqz4s6b9bd3
+";
     })
   ];
 
