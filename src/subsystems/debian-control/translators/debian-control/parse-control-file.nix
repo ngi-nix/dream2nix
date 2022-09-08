@@ -40,10 +40,33 @@
           (l.splitString ",")
           (l.map trimSurroundingWhitespace)
         ]))
+    # XXX: deal with this better
+    (l.map
+      (strList:
+        l.filter (s: (s != "")) strList))
   ];
+
   sectionNamesWithContents = l.listToAttrs (l.zipListsWith l.nameValuePair sectionNames sectionContents);
+
   packageName = l.head sectionNamesWithContents.Source;
-  inputList = l.filterAttrs (header: _: lib.any (inputHeader: header == inputHeader) inputHeaders) sectionNamesWithContents;
+
+  inputAttrsWithHeaders = l.filterAttrs (header: _: lib.any (inputHeader: header == inputHeader) inputHeaders) sectionNamesWithContents;
+
+  allDependencies = l.unique (l.flatten (l.attrValues inputAttrsWithHeaders));
+
+  # throw out ${...:...}
+  allDependenciesWithoutLeadingDollar =
+    l.filter
+      (depName: (builtins.match ''\$.+'' depName) == null)
+      allDependencies;
+
+  allDependenciesWithoutVersions =
+    l.map
+      (depName:
+        builtins.head (l.split " " depName)
+        # builtins.head (builtins.match "([^ \t]+) .+" depName)
+      )
+      allDependenciesWithoutLeadingDollar;
 in {
-  inherit packageName sectionNamesAndContents sectionNames sectionContents sectionNamesWithContents inputList;
+  inherit packageName sectionNamesAndContents sectionNames sectionContents sectionNamesWithContents inputAttrsWithHeaders allDependencies allDependenciesWithoutLeadingDollar allDependenciesWithoutVersions;
 }
