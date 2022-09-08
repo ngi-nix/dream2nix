@@ -26,11 +26,11 @@
     "cosmic": {
       "flake": false,
       "locked": {
-        "lastModified": 1659002596,
-        "narHash": "sha256-JGQW/9TdN48iyGMxRitPd4krXhb0qaLeGEfazFoL2J4=",
+        "lastModified": 1662489023,
+        "narHash": "sha256-mSe1uMezebhOqnagABRf30VYk0A14qoa+G/Ksq35QVU=",
         "owner": "i3",
         "repo": "i3",
-        "rev": "ebcd1d43ea9fd08a1dbb1212fb61e42f05a22684",
+        "rev": "4db383e430869679419ac1bf018aa0c9cbfd2472",
         "type": "github"
       },
       "original": {
@@ -42,11 +42,11 @@
     "crane": {
       "flake": false,
       "locked": {
-        "lastModified": 1661875961,
-        "narHash": "sha256-f1h/2c6Teeu1ofAHWzrS8TwBPcnN+EEu+z1sRVmMQTk=",
+        "lastModified": 1654444508,
+        "narHash": "sha256-4OBvQ4V7jyt7afs6iKUvRzJ1u/9eYnKzVQbeQdiamuY=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "d9f394e4e20e97c2a60c3ad82c2b6ef99be19e24",
+        "rev": "db5482bf225acc3160899124a1df5a617cfa27b5",
         "type": "github"
       },
       "original": {
@@ -84,8 +84,8 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1662049152,
-        "narHash": "sha256-Q6IpguPkmtjxm4RYXKQC2U4veDyzqmR5YIFTIGEXww4=",
+        "lastModified": 1662377011,
+        "narHash": "sha256-MnkEe3jROEj8c78ltt95fdRgVLMR6iYNHRmIRdtg5q0=",
         "type": "git",
         "url": "file:///home/kenji/git/dream2nix"
       },

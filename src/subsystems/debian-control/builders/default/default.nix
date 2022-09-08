@@ -40,22 +40,24 @@
     #   produceDerivation name (mkDerivation {...})
     produceDerivation,
     ...
-  } @ args: 
-  let
+  } @ args: let
     l = lib // builtins;
 
     # the main package
     # defaultPackage = throw (lib.toString allPackages);
-    defaultPackage = allPackages."${defaultPackageName}";
-  # ."${defaultPackageVersion}";
+    defaultPackage = pkgs.tree;
+    # allPackages."${defaultPackageName}";
+    # ."${defaultPackageVersion}";
+    packages.default = pkgs.tree;
+    packages."cosmic-launcher"."1.0.0" = pkgs.tree;
 
     # packages to export
-    packages =
-      lib.mapAttrs
-      (name: version: {
-        "${version}" = allPackages.${name}.${version};
-      })
-      args.packages;
+    # packages =
+    #   lib.mapAttrs
+    #   (name: version: {
+    #     "${version}" = allPackages.${name}.${version};
+    #   })
+    #   args.packages;
 
     devShell = pkgs.mkShell {
       name = "test";
@@ -70,6 +72,16 @@
         versions
         (version: makeOnePackage name version))
       packageVersions;
+
+      nativeBuildInputs = map (name: pkgs."${name}") (subsystemAttrs."control_inputs") ++ [pkgs.glib];
+    # nativeBuildInputs = (getSource "control_inputs" "1.0.0") ++ [pkgs.pkg-config];
+    # buildInputs = (getSource "control_inputs" "1.0.0") ++ [pkgs.pkg-config];
+    buildInputs = [];
+
+    devShells."${defaultPackageName}-control" = pkgs.mkShell {
+      name = "${defaultPackageName}";
+      buildInputs = nativeBuildInputs ++ buildInputs;
+    };
 
     # Generates a derivation for a specific package name + version
     makeOnePackage = name: version: let
@@ -86,7 +98,6 @@
           ++ getSource "control_inputs"
           ++ [pkgs.pkg-config];
 
-        nativeBuildInputs = getSource "control_inputs" ++ [pkgs.pkg-config];
 
         # TODO: Implement build phases
         # passthru.devShells."${defaultPackageName}-test" = pkgs.mkShell {
@@ -98,13 +109,15 @@
       # apply packageOverrides to current derivation
       produceDerivation name pkg;
   in {
-    inherit 
-    defaultPackage 
-    packages;
-    devShells = {
-      test = pkgs.mkShell {
-        buildInputs = [pkgs.tree];
-      };
-    };
+    inherit
+      defaultPackage
+      packages
+      devShells
+      ;
+    # devShells = {
+    #   test = pkgs.mkShell {
+    #     buildInputs = [pkgs.tree];
+    #   };
+    # };
   };
 }

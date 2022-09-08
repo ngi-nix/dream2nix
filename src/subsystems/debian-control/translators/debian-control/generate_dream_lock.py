@@ -6,7 +6,7 @@ import pathlib
 def main():
     # TODO parse versions
     VERSION = "UNKNOWN"
-    NAME=os.environ.get("NAME") + "-debian-control"
+    NAME = os.environ.get("NAME")
 
     dream_lock = dict(
         sources={},
