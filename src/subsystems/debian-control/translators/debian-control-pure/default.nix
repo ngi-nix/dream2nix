@@ -108,8 +108,6 @@ in {
     */
     tree,
     # arguments defined in `extraArgs` (see below) specified by user
-    noDev,
-    theAnswer,
     ...
   } @ args: let
     # get the root source and project source
