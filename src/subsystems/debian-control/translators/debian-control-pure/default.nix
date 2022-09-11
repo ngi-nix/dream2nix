@@ -122,7 +122,7 @@ in {
       inherit lib;
       input = controlFileText;
     };
-    controlInputs = parsedControlFile.allDependenciesWithoutVersions;
+    controlInputs = parsedControlFile.allDependenciesWithTrimmedVersions;
   in
     dlib.simpleTranslate2.translate
     ({objectsByKey, ...}: rec {

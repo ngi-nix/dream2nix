@@ -57,11 +57,11 @@
     (depName: (builtins.match ''\$.+'' depName) == null)
     allDependencies;
 
-  allDependenciesWithoutVersions =
+  allDependenciesWithTrimmedVersions =
     l.map
     (depName:
       builtins.head (l.split " " depName))
     allDependenciesWithoutLeadingDollar;
 in {
-  inherit packageName sectionNamesAndContents sectionNames sectionContents sectionNamesWithContents inputAttrsWithHeaders allDependencies allDependenciesWithoutLeadingDollar allDependenciesWithoutVersions;
+  inherit packageName sectionNamesAndContents sectionNames sectionContents sectionNamesWithContents inputAttrsWithHeaders allDependencies allDependenciesWithoutLeadingDollar allDependenciesWithTrimmedVersions;
 }
