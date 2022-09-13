@@ -26,16 +26,16 @@
     "cosmic": {
       "flake": false,
       "locked": {
-        "lastModified": 1662489023,
-        "narHash": "sha256-mSe1uMezebhOqnagABRf30VYk0A14qoa+G/Ksq35QVU=",
-        "owner": "i3",
-        "repo": "i3",
-        "rev": "4db383e430869679419ac1bf018aa0c9cbfd2472",
+        "lastModified": 1662488179,
+        "narHash": "sha256-o620jCYfr3iyt442efyEFYS0Os2lRJlsBT2EJRJD5Gc=",
+        "owner": "pop-os",
+        "repo": "launcher",
+        "rev": "6e2fa02e819435f0ce0693baeb5d7907c7fd9719",
         "type": "github"
       },
       "original": {
-        "owner": "i3",
-        "repo": "i3",
+        "owner": "pop-os",
+        "repo": "launcher",
         "type": "github"
       }
     },
@@ -84,8 +84,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1662665252,
-        "narHash": "sha256-CFNVegwPs00FNdMHtOoV7lOn32AcGWuHWdxsYIAAKgg=",
+        "lastModified": 1662857017,
+        "narHash": "sha256-IyYLVuDPj6OMcG+NOrdSwyRolaF1w8nMAXCqC8BZzXA=",
+        "ref": "refs/heads/mob/debian-control-builder",
+        "rev": "5accad7654cf16062c0b4d0be49b079e47555cd6",
+        "revCount": 792,
         "type": "git",
         "url": "file:///home/kenji/git/dream2nix"
       },

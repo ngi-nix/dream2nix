@@ -1,0 +1,16 @@
+{
+  "_generic": {
+    "defaultPackage": "pop-launcher",
+    "invalidationHash": "9c1dc581bd22d431ca5e0a175f0874bd4f7faf8dc7ed1e0a2c6c6c74fad7ea30",
+    "location": "",
+    "packages": {
+      "pop-launcher": "UNKNOWN"
+    },
+    "sourcesAggregatedHash": null,
+    "subsystem": "debian-control"
+  },
+  "_subsystem": {
+    "control_inputs": []
+  },
+  "sources": {}
+}
