@@ -1,8 +1,8 @@
 {
   inputs = {
     dream2nix.url = "github:nix-community/dream2nix";
-    # cosmic.url = "github:pop-os/launcher";
-    cosmic.url = "github:i3/i3";
+    cosmic.url = "github:pop-os/launcher";
+    # cosmic.url = "github:i3/i3";
     cosmic.flake = false;
   };
 

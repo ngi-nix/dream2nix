@@ -241,10 +241,10 @@ in {
   # String arguments contain a default value and examples. Flags do not.
   # Flags are false by default.
   extraArgs = {
-    # extraInputs = {
-    #   description = "";
-    #   type = "argument";
-    # };
+    extraInputs = {
+      description = "A space separated string of nixpkgs inputs.";
+      type = "argument";
+    };
 
     # Example: boolean option
     # Flags always default to 'false' if not specified by the user
