@@ -137,7 +137,9 @@ in {
       # Extract subsystem specific attributes.
       # The structure of this should be defined in:
       #   ./src/specifications/{subsystem}
-      subsystemAttrs = {theAnswer = args.theAnswer;};
+      subsystemAttrs = {
+        control_inputs = controlInputs;
+      };
 
       # name of the default package
       defaultPackage = parsedControlFile.packageName;
