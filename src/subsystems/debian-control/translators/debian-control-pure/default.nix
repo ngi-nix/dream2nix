@@ -122,7 +122,11 @@ in {
       inherit lib;
       input = controlFileText;
     };
-    controlInputs = parsedControlFile.allDependenciesWithTrimmedVersions;
+
+    debnixMap = builtins.fromJSON (builtins.readFile ./debnix.json);
+
+    controlInputs = l.map (debianName: builtins.getAttr debianName debnixMap) (l.filter (debianName: builtins.hasAttr debianName debnixMap)
+      parsedControlFile.allDependenciesWithTrimmedVersions);
   in
     dlib.simpleTranslate2.translate
     ({objectsByKey, ...}: rec {
@@ -237,6 +241,11 @@ in {
   # String arguments contain a default value and examples. Flags do not.
   # Flags are false by default.
   extraArgs = {
+    # extraInputs = {
+    #   description = "";
+    #   type = "argument";
+    # };
+
     # Example: boolean option
     # Flags always default to 'false' if not specified by the user
     # noDev = {
