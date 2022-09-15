@@ -108,6 +108,8 @@ in {
     */
     tree,
     # arguments defined in `extraArgs` (see below) specified by user
+    extraInputs,
+    excludedInputs,
     ...
   } @ args: let
     # get the root source and project source
@@ -125,8 +127,15 @@ in {
 
     debnixMap = builtins.fromJSON (builtins.readFile ./debnix.json);
 
-    controlInputs = l.map (debianName: builtins.getAttr debianName debnixMap) (l.filter (debianName: builtins.hasAttr debianName debnixMap)
-      parsedControlFile.allDependenciesWithTrimmedVersions);
+    controlInputs =
+      let excludedInputsList = l.splitString " " excludedInputs;
+      in
+      l.pipe parsedControlFile.allDependenciesWithTrimmedVersions [
+        (l.filter (debianName: builtins.hasAttr debianName debnixMap))
+        (l.map (debianName: builtins.getAttr debianName debnixMap))
+        (l.filter (nixName: ! (builtins.elem nixName excludedInputsList)))
+      ]
+    ++ l.splitString " " extraInputs;
   in
     dlib.simpleTranslate2.translate
     ({objectsByKey, ...}: rec {
@@ -242,8 +251,19 @@ in {
   # Flags are false by default.
   extraArgs = {
     extraInputs = {
-      description = "A space separated string of nixpkgs inputs.";
+      description = "A space-separated string of nixpkgs inputs.";
       type = "argument";
+      examples = [
+        "xorg.libx11 libadwaita"
+      ];
+    };
+
+    excludedInputs = {
+      description = "A space-separated string of nixpkgs inputs to exclude.";
+      type = "argument";
+      examples = [
+        "xorg.libx11 libadwaita"
+      ];
     };
 
     # Example: boolean option

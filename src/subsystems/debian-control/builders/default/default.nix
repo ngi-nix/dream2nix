@@ -74,7 +74,11 @@
               (version: makeOnePackage name version))
           packageVersions;
 
-      nativeBuildInputs = map (name: pkgs."${name}") (subsystemAttrs."control_inputs") ++ [ pkgs.glib ];
+      nativeBuildInputs = map (name:
+        let pathList = l.splitString "." name;
+        in
+          l.attrByPath pathList "" pkgs
+      ) (subsystemAttrs."control_inputs") ++ [ pkgs.glib ];
       # nativeBuildInputs = (getSource "control_inputs" "1.0.0") ++ [pkgs.pkg-config];
       # buildInputs = (getSource "control_inputs" "1.0.0") ++ [pkgs.pkg-config];
       buildInputs = [ ];
